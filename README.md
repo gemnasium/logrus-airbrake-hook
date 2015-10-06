@@ -23,7 +23,7 @@ import (
 
 func main() {
     log := logrus.New()
-    log.AddHook(airbrake.NewHook(123, "xyz", "development"))
+    log.AddHook(airbrake.NewHook(123, "xyz", "production"))
     log.Error("some logging message") // The error is sent to airbrake in background
 }
 ```
