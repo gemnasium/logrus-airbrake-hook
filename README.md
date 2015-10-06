@@ -1,4 +1,4 @@
-# Airbrake Hook for Logrus <img src="http://i.imgur.com/hTeVwmJ.png" width="40" height="40" alt=":walrus:" class="emoji" title=":walrus:" />
+# Airbrake Hook for Logrus <img src="http://i.imgur.com/hTeVwmJ.png" width="40" height="40" alt=":walrus:" class="emoji" title=":walrus:" />&nbsp;[![Build Status](https://travis-ci.org/gemnasium/logrus-airbrake-hook.svg?branch=master)](https://travis-ci.org/gemnasium/logrus-airbrake-hook)&nbsp;[![godoc reference](https://godoc.org/github.com/gemnasium/logrus-airbrake-hook?status.png)][godoc]
 
 Use this hook to send your errors to [Airbrake](https://airbrake.io/).
 This hook is using the [official airbrake go package](https://github.com/airbrake/gobrake), and will hit the api V3.
