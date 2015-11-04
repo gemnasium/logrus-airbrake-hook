@@ -49,7 +49,7 @@ func (hook *airbrakeHook) Fire(entry *logrus.Entry) error {
 		notice.Context[k] = fmt.Sprintf("%s", v)
 	}
 	// Don't exit before sending the exception
-	if entry.Level == logrus.ErrorLevel || entry.Level == logrus.PanicLevel {
+	if entry.Level == logrus.FatalLevel || entry.Level == logrus.PanicLevel {
 		hook.sendNotice(notice)
 		return nil
 	}
