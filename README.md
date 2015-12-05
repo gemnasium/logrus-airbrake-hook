@@ -2,7 +2,7 @@
 
 Use this hook to send your errors to [Airbrake](https://airbrake.io/).
 This hook is using the [official airbrake go package](https://github.com/airbrake/gobrake), and will hit the api V3.
-The hook is async for `log.Error`, but blocking for the notice to be sent with `log.Fatal` and `log.Panic`.
+The hook is synchronous and will send the error for `log.Error`, `log.Fatal` and `log.Panic` levels.
 
 All logrus fields will be sent as context fields on Airbrake.
 

@@ -3,21 +3,16 @@ package airbrake // import "gopkg.in/gemnasium/logrus-airbrake-hook.v2"
 import (
 	"errors"
 	"fmt"
+	"os"
+
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/airbrake/gobrake.v2"
-	"os"
-	"sync"
 )
-
-// Set airbrake.BufSize = <value> _before_ calling NewHook
-var BufSize uint = 1024
 
 // AirbrakeHook to send exceptions to an exception-tracking service compatible
 // with the Airbrake API.
 type airbrakeHook struct {
-	Airbrake   *gobrake.Notifier
-	noticeChan chan *gobrake.Notice
-	wg         sync.WaitGroup
+	Airbrake *gobrake.Notifier
 }
 
 func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
@@ -30,10 +25,8 @@ func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
 		return notice
 	})
 	hook := &airbrakeHook{
-		Airbrake:   airbrake,
-		noticeChan: make(chan *gobrake.Notice, BufSize),
+		Airbrake: airbrake,
 	}
-	go hook.fire()
 	return hook
 }
 
@@ -50,19 +43,8 @@ func (hook *airbrakeHook) Fire(entry *logrus.Entry) error {
 		notice.Context[k] = fmt.Sprintf("%s", v)
 	}
 
-	hook.wg.Add(1)
-	hook.noticeChan <- notice
-	hook.wg.Wait()
+	hook.sendNotice(notice)
 	return nil
-}
-
-// fire sends errors to airbrake when an entry is available on entryChan
-func (hook *airbrakeHook) fire() {
-	for {
-		notice := <-hook.noticeChan
-		hook.sendNotice(notice)
-		hook.wg.Done()
-	}
 }
 
 func (hook *airbrakeHook) sendNotice(notice *gobrake.Notice) {
