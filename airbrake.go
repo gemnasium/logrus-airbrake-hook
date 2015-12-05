@@ -3,10 +3,10 @@ package airbrake // import "gopkg.in/gemnasium/logrus-airbrake-hook.v2"
 import (
 	"errors"
 	"fmt"
-	"os"
-
 	"github.com/Sirupsen/logrus"
 	"gopkg.in/airbrake/gobrake.v2"
+	"os"
+	"sync"
 )
 
 // Set airbrake.BufSize = <value> _before_ calling NewHook
@@ -17,6 +17,7 @@ var BufSize uint = 1024
 type airbrakeHook struct {
 	Airbrake   *gobrake.Notifier
 	noticeChan chan *gobrake.Notice
+	wg         sync.WaitGroup
 }
 
 func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
@@ -48,12 +49,10 @@ func (hook *airbrakeHook) Fire(entry *logrus.Entry) error {
 	for k, v := range entry.Data {
 		notice.Context[k] = fmt.Sprintf("%s", v)
 	}
-	// Don't exit before sending the exception
-	if entry.Level == logrus.FatalLevel || entry.Level == logrus.PanicLevel {
-		hook.sendNotice(notice)
-		return nil
-	}
+
+	hook.wg.Add(1)
 	hook.noticeChan <- notice
+	hook.wg.Wait()
 	return nil
 }
 
@@ -62,6 +61,7 @@ func (hook *airbrakeHook) fire() {
 	for {
 		notice := <-hook.noticeChan
 		hook.sendNotice(notice)
+		hook.wg.Done()
 	}
 }
 
