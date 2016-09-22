@@ -24,10 +24,32 @@ import (
 func main() {
     log := logrus.New()
     log.AddHook(airbrake.NewHook(123, "xyz", "production"))
-    log.Error("some logging message") // The error is sent to airbrake in background
+    log.Error("some logging message")
 }
 ```
 
 Note that if environment == "development", the hook will not send anything to airbrake.
 
+### Reporting http request failure
 
+
+```go
+import (
+    "log/syslog"
+    "github.com/Sirupsen/logrus"
+    "gopkg.in/gemnasium/logrus-airbrake-hook.v2" // the package is named "aibrake"
+    )
+
+func main() {
+    log := logrus.New()
+    log.AddHook(airbrake.NewHook(123, "xyz", "production"))
+req, err := http.NewRequest("GET", "http://example.com", nil)
+    log.WithField("request", req).Error("some logging message")
+}
+```
+
+Notes:
+
+* the req will be removed from the log entry
+* the name of the field doesn't matter, since it's not logged
+* if more than one request is sent, only the first will be taken into account (and the others will be logged as strings)

@@ -3,6 +3,7 @@ package airbrake // import "gopkg.in/gemnasium/logrus-airbrake-hook.v2"
 import (
 	"errors"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/Sirupsen/logrus"
@@ -38,9 +39,20 @@ func (hook *airbrakeHook) Fire(entry *logrus.Entry) error {
 	} else {
 		notifyErr = errors.New(entry.Message)
 	}
-	notice := hook.Airbrake.Notice(notifyErr, nil, 3)
+	var req *http.Request
+	var reqKey string
 	for k, v := range entry.Data {
-		notice.Context[k] = fmt.Sprintf("%s", v)
+		if r, ok := v.(*http.Request); ok {
+			req = r
+			reqKey = k
+			break
+		}
+	}
+	notice := hook.Airbrake.Notice(notifyErr, req, 3)
+	for k, v := range entry.Data {
+		if k != reqKey {
+			notice.Context[k] = fmt.Sprintf("%s", v)
+		}
 	}
 
 	hook.sendNotice(notice)
