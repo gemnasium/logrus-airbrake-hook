@@ -40,19 +40,16 @@ func (hook *airbrakeHook) Fire(entry *logrus.Entry) error {
 		notifyErr = errors.New(entry.Message)
 	}
 	var req *http.Request
-	var reqKey string
 	for k, v := range entry.Data {
 		if r, ok := v.(*http.Request); ok {
 			req = r
-			reqKey = k
+			delete(entry.Data, k)
 			break
 		}
 	}
 	notice := hook.Airbrake.Notice(notifyErr, req, 3)
 	for k, v := range entry.Data {
-		if k != reqKey {
-			notice.Context[k] = fmt.Sprintf("%s", v)
-		}
+		notice.Context[k] = fmt.Sprintf("%s", v)
 	}
 
 	hook.sendNotice(notice)

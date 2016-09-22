@@ -156,9 +156,6 @@ func TestLogEntryWithHTTPRequestFields(t *testing.T) {
 		if received.Context["url"] != "http://example.com" {
 			t.Errorf("Expected message to contain Context[\"url\"] == \"http://example.com\" got %q", received.Context["url"])
 		}
-		if _, ok := received.Context["Request"]; ok {
-			t.Errorf("Unexpected \"request\" in received message context")
-		}
 	case <-time.After(time.Second):
 		t.Error("Timed out; no notice received by Airbrake API")
 	}
