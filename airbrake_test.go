@@ -8,8 +8,9 @@ import (
 	"testing"
 	"time"
 
+	gobrake "gopkg.in/airbrake/gobrake.v3"
+
 	"github.com/sirupsen/logrus"
-	"gopkg.in/airbrake/gobrake.v2"
 )
 
 type customErr struct {
