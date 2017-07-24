@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	gobrake "gopkg.in/airbrake/gobrake.v2"
+	gobrake "gopkg.in/airbrake/gobrake.v3"
 
 	"github.com/sirupsen/logrus"
 )

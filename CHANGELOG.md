@@ -1,5 +1,9 @@
 # logrus-airbrake-hook Changelog
 
+V3.0.1 - 2017-07-24
+
+* Remove v2 leftover
+
 V3.0.0 - 2017-07-19
 
 * Bump to gobrake v3
