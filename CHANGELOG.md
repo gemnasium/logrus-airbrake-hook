@@ -1,5 +1,9 @@
 # logrus-airbrake-hook Changelog
 
+V3.0.2 - 2018-03-14
+
+* Fix gobrake import
+
 V3.0.1 - 2017-07-24
 
 * Remove v2 leftover
