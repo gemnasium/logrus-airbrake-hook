@@ -1,9 +1,9 @@
 language: go
 go:
-  - 1.9
-  - 1.10
-  - 1.11
-  - tip
+  - "1.9"
+  - "1.10"
+  - "1.11"
+  - "tip"
 install:
   - mkdir -p $HOME/gopath/src/gopkg.in/gemnasium
   - mv $HOME/gopath/src/github.com/gemnasium/logrus-airbrake-hook $HOME/gopath/src/gopkg.in/gemnasium/logrus-airbrake-hook.v3
