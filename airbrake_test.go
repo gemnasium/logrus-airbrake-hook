@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/airbrake/gobrake"
+	"github.com/airbrake/gobrake/v4"
 	"github.com/sirupsen/logrus"
 )
 
@@ -167,7 +167,9 @@ func newTestHook() *airbrakeHook {
 	httpClient := &http.Client{Transport: &FakeRoundTripper{}}
 
 	hook := NewHook(123, testAPIKey, "production")
-	hook.Airbrake.Client = httpClient
+	hook.Airbrake = gobrake.NewNotifierWithOptions(&gobrake.NotifierOptions{
+		HTTPClient: httpClient,
+	})
 	return hook
 }
 
