@@ -18,7 +18,7 @@ The hook must be configured with:
 import (
     "log/syslog"
     "github.com/sirupsen/logrus"
-    "gopkg.in/gemnasium/logrus-airbrake-hook.v3" // the package is named "aibrake"
+    "github.com/Shareed2k/logrus-airbrake-hook" // the package is named "aibrake"
     )
 
 func main() {
@@ -37,7 +37,7 @@ Note that if environment == "development", the hook will not send anything to ai
 import (
     "log/syslog"
     "github.com/sirupsen/logrus"
-    "gopkg.in/gemnasium/logrus-airbrake-hook.v3" // the package is named "aibrake"
+    "github.com/Shareed2k/logrus-airbrake-hook" // the package is named "aibrake"
     )
 
 func main() {
