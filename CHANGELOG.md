@@ -1,5 +1,9 @@
 # logrus-airbrake-hook Changelog
 
+v4.0.0 - 2020-01-20
+
+* Bump gobrake v4
+
 V3.0.3 - 2018-12-12
 
 * Restore gopkg.in import to lock to v2

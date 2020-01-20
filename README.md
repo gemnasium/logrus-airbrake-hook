@@ -1,7 +1,7 @@
-# Airbrake Hook for Logrus <img src="http://i.imgur.com/hTeVwmJ.png" width="40" height="40" alt=":walrus:" class="emoji" title=":walrus:" />&nbsp;[![Build Status](https://travis-ci.org/gemnasium/logrus-airbrake-hook.svg?branch=master)](https://travis-ci.org/gemnasium/logrus-airbrake-hook)&nbsp;[![godoc reference](https://godoc.org/github.com/gemnasium/logrus-airbrake-hook?status.png)](https://godoc.org/gopkg.in/gemnasium/logrus-airbrake-hook.v3)
+# Airbrake Hook for Logrus <img src="http://i.imgur.com/hTeVwmJ.png" width="40" height="40" alt=":walrus:" class="emoji" title=":walrus:" />&nbsp;[![Build Status](https://travis-ci.org/gemnasium/logrus-airbrake-hook.svg?branch=master)](https://travis-ci.org/gemnasium/logrus-airbrake-hook)&nbsp;[![godoc reference](https://godoc.org/github.com/gemnasium/logrus-airbrake-hook?status.png)](https://godoc.org/gopkg.in/gemnasium/logrus-airbrake-hook.v4)
 
 Use this hook to send your errors to [Airbrake](https://airbrake.io/).
-This hook is using the [official airbrake go package](https://github.com/airbrake/gobrake), and will hit the api V3.
+This hook is using the [official airbrake go package](https://github.com/airbrake/gobrake), and will hit the api V4.
 The hook is synchronous and will send the error for `log.Error`, `log.Fatal` and `log.Panic` levels.
 
 All logrus fields will be sent as context fields on Airbrake.
@@ -18,7 +18,7 @@ The hook must be configured with:
 import (
     "log/syslog"
     "github.com/sirupsen/logrus"
-    "gopkg.in/gemnasium/logrus-airbrake-hook.v3" // the package is named "aibrake"
+    "gopkg.in/gemnasium/logrus-airbrake-hook.v4" // the package is named "aibrake"
     )
 
 func main() {
@@ -37,7 +37,7 @@ Note that if environment == "development", the hook will not send anything to ai
 import (
     "log/syslog"
     "github.com/sirupsen/logrus"
-    "gopkg.in/gemnasium/logrus-airbrake-hook.v3" // the package is named "aibrake"
+    "gopkg.in/gemnasium/logrus-airbrake-hook.v4" // the package is named "aibrake"
     )
 
 func main() {
