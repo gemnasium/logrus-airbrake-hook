@@ -1,4 +1,4 @@
-package airbrake // import "gopkg.in/gemnasium/logrus-airbrake-hook.v3"
+package airbrake // import "gopkg.in/gemnasium/logrus-airbrake-hook.v4"
 
 import (
 	"errors"
@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/airbrake/gobrake/v4"
 	"github.com/sirupsen/logrus"
-	gobrake "gopkg.in/airbrake/gobrake.v2"
 )
 
 // AirbrakeHook to send exceptions to an exception-tracking service compatible
