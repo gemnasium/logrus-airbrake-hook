@@ -3,6 +3,7 @@
 v4.0.0 - 2020-01-20
 
 * Bump gobrake v4
+* Add support for go modules
 
 V3.0.3 - 2018-12-12
 
