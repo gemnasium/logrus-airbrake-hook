@@ -20,11 +20,11 @@ var defaultLevels = []logrus.Level{
 // AirbrakeHook to send exceptions to an exception-tracking service compatible
 // with the Airbrake API.
 type airbrakeHook struct {
-	Airbrake *gobrake.Notifier
-	levels   []logrus.Level
+	Airbrake  *gobrake.Notifier
+	UseLevels []logrus.Level
 }
 
-func NewHook(projectID int64, apiKey, env string, levels ...logrus.Level) *airbrakeHook {
+func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
 	airbrake := gobrake.NewNotifier(projectID, apiKey)
 	airbrake.AddFilter(func(notice *gobrake.Notice) *gobrake.Notice {
 		if env == "development" {
@@ -34,13 +34,9 @@ func NewHook(projectID int64, apiKey, env string, levels ...logrus.Level) *airbr
 		return notice
 	})
 
-	if len(levels) == 0 {
-		levels = defaultLevels
-	}
-
 	hook := &airbrakeHook{
-		Airbrake: airbrake,
-		levels:   levels,
+		Airbrake:  airbrake,
+		UseLevels: defaultLevels,
 	}
 	return hook
 }
@@ -77,5 +73,5 @@ func (hook *airbrakeHook) sendNotice(notice *gobrake.Notice) {
 }
 
 func (hook *airbrakeHook) Levels() []logrus.Level {
-	return hook.levels
+	return hook.UseLevels
 }
