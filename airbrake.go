@@ -10,10 +10,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// default levels to be fired when logging on
+var defaultLevels = []logrus.Level{
+	logrus.ErrorLevel,
+	logrus.FatalLevel,
+	logrus.PanicLevel,
+}
+
 // AirbrakeHook to send exceptions to an exception-tracking service compatible
 // with the Airbrake API.
 type airbrakeHook struct {
-	Airbrake *gobrake.Notifier
+	Airbrake  *gobrake.Notifier
+	UseLevels []logrus.Level
 }
 
 func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
@@ -25,8 +33,10 @@ func NewHook(projectID int64, apiKey, env string) *airbrakeHook {
 		notice.Context["environment"] = env
 		return notice
 	})
+
 	hook := &airbrakeHook{
-		Airbrake: airbrake,
+		Airbrake:  airbrake,
+		UseLevels: defaultLevels,
 	}
 	return hook
 }
@@ -63,9 +73,5 @@ func (hook *airbrakeHook) sendNotice(notice *gobrake.Notice) {
 }
 
 func (hook *airbrakeHook) Levels() []logrus.Level {
-	return []logrus.Level{
-		logrus.ErrorLevel,
-		logrus.FatalLevel,
-		logrus.PanicLevel,
-	}
+	return hook.UseLevels
 }
