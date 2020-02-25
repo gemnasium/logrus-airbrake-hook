@@ -1,5 +1,9 @@
 # logrus-airbrake-hook Changelog
 
+v4.1.0 - 2020-02-25
+
+* Expose log levels (!8)
+
 v4.0.0 - 2020-01-20
 
 * Bump gobrake v4
