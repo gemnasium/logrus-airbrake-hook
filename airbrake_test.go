@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/airbrake/gobrake/v4"
+	"github.com/airbrake/gobrake/v5"
 	"github.com/sirupsen/logrus"
 )
 
@@ -178,6 +178,11 @@ type FakeRoundTripper struct {
 }
 
 func (rt *FakeRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	if r.Body == nil {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+		}, nil
+	}
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		panic(err)
